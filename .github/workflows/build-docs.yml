@@ -11,7 +11,7 @@ jobs:
     - name: Install prerequisites
       run: | 
         sudo apt-get --allow-releaseinfo-change update -y && sudo apt-get install -y tox pandoc
-    - name: Buiding HTML version of RA1 and RC1
+    - name: Buiding RA1 and RC1 in HTML
       run: |
         cd doc/ref_arch/openstack
         echo "---------------------------------------------------------------------------------------"
@@ -19,11 +19,28 @@ jobs:
         echo "---------------------------------------------------------------------------------------"
         tox -e docs
         echo "Building  HTML version RA1 and RC1 was successful! "
-        cd - 
     - name: Store html build result
       uses: actions/upload-artifact@v3
       with:
-        name: ra2-html
+        name: ra1-rc1-html
         path: |
-            doc/ref_arch/openstackbuild
+            doc/ref_arch/openstack/build
+    - name: Building RA1 and RC1 in GSMA doc
+      run: |
+        echo "---------------------------------------------------------------------------------------"
+        echo "---------------------------------- Building GSMA doc ----------------------------------"
+        echo "---------------------------------------------------------------------------------------"
+        cd doc/ref_arch/openstack
+        pwd
+        cat ./tox.ini
+        tox -e gsma
+        echo "Building GSMA doc was successful! "
+    - name: Store GSMA doc build result
+      uses: actions/upload-artifact@v3
+      with:
+        name: ra1-rc1-gsma-doc
+        path: |
+          doc/ref_arch/openstack/gsma/ra1.docx
+      
+
       
