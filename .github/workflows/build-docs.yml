@@ -1,0 +1,29 @@
+name: "Pull Request Docs Check"
+on: 
+- pull_request
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v3
+    - name: Install prerequisites
+      run: | 
+        sudo apt-get --allow-releaseinfo-change update -y && sudo apt-get install -y tox
+    - name: Buiding HTML version of RA1 and RC1
+      run: |
+        cd doc/ref_arch/openstack
+        echo "---------------------------------------------------------------------------------------"
+        echo "---------------------------------- Building HTML version of RA1 and RC1 ---------------"
+        echo "---------------------------------------------------------------------------------------"
+        tox -e docs
+        echo "Building  HTML version RA1 and RC1 was successful! "
+        cd - 
+    - name: Store html build result
+      uses: actions/upload-artifact@v3
+      with:
+        name: ra2-html
+        path: |
+            doc/ref_arch/openstackbuild
+      
