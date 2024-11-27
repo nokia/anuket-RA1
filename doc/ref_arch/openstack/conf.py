@@ -17,6 +17,7 @@ linkcheck_ignore = [
     'http://127.0.0.1',
     'https://www.sdxcentral.com',
     'https://ntia.gov',
+    'http://104.154.71.112:8080/'
 ]
 autosectionlabel_prefix_document = True
 autosectionlabel_maxdepth = 4
